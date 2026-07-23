@@ -10,14 +10,22 @@ function getStoredAccount() {
   const raw = localStorage.getItem(ACCOUNT_STORAGE_KEY);
   if (!raw) return { ...DEFAULT_ACCOUNT };
   try {
-    return { ...DEFAULT_ACCOUNT, ...JSON.parse(raw) };
+    const parsed = JSON.parse(raw);
+    console.log('recovery.getStoredAccount - raw:', raw);
+    return { ...DEFAULT_ACCOUNT, ...parsed };
   } catch (err) {
     return { ...DEFAULT_ACCOUNT };
   }
 }
 
 function saveStoredAccount(account) {
-  localStorage.setItem(ACCOUNT_STORAGE_KEY, JSON.stringify(account));
+  try {
+    localStorage.setItem(ACCOUNT_STORAGE_KEY, JSON.stringify(account));
+    localStorage.setItem(ACCOUNT_STORAGE_KEY + '_updated_at', String(Date.now()));
+    console.log('recovery.saveStoredAccount - saved', account);
+  } catch (err) {
+    console.error('recovery.saveStoredAccount - failed', err);
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {

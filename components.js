@@ -108,6 +108,7 @@ function initLoginModal() {
       return { ...DEFAULT_ACCOUNT };
     }
     try {
+      console.log('getStoredAccount - raw:', raw);
       const stored = JSON.parse(raw);
       if (!stored || typeof stored !== 'object') {
         saveStoredAccount(DEFAULT_ACCOUNT);
@@ -120,16 +121,25 @@ function initLoginModal() {
       }
       return merged;
     } catch (err) {
+      console.warn('getStoredAccount - parse error, resetting to default', err);
       saveStoredAccount(DEFAULT_ACCOUNT);
       return { ...DEFAULT_ACCOUNT };
     }
   }
 
   function saveStoredAccount(account) {
-    localStorage.setItem(ACCOUNT_STORAGE_KEY, JSON.stringify(account));
+    try {
+      localStorage.setItem(ACCOUNT_STORAGE_KEY, JSON.stringify(account));
+      console.log('saveStoredAccount - saved:', account);
+      // also write a timestamp flag to help debugging across navigation
+      localStorage.setItem(ACCOUNT_STORAGE_KEY + '_updated_at', String(Date.now()));
+    } catch (err) {
+      console.error('saveStoredAccount - failed to save', err);
+    }
   }
 
   const account = getStoredAccount();
+  // do not display stored account information in the UI
 
   openButtons.forEach((btn) => {
     btn.addEventListener('click', (e) => {
