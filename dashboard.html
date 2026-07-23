@@ -3,10 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/dashboard.css">
     <title>GRCme | Dashboard</title>
 </head>
 <body>
-    <h1>Welcome to the Dashboard</h1>
-    <a href="index.html" class="btn btn-primary">Go to Log-in</a>
+
+    <div class="dashboard-container">
+        
+        <div class="dashboard-card">
+            <h1 style="color: black;">MY DASHBOARD</h1>
+            <img src="assets/Escoton_Jay_M.jpg" alt="Jay Masamayor Escoton" class="profile-photo">
+            
+            <h1 class="profile-name">Jay Masamayor Escoton</h1>
+            <p class="profile-role">IT302 Class Representative</p>
+            <div class="profile-info">
+                <div class="info-row"><span>Name</span><strong>Jay Masamayor Escoton</strong></div>
+                <div class="info-row"><span>Position</span><strong>IT302 Class Representative</strong></div>
+                <div class="info-row"><span>Email</span><strong>jayiscotton@gmail.com</strong></div>
+                <div class="info-row"><span>Role</span><strong>SYSARCH Leader</strong></div>
+            </div>
+            <a href="index.html" class="logout-button">LOG-OUT</a>
+        </div>
+    </div>
+
+    <div class="debug-bar">
+        <div class="debug-item"><strong>Session</strong><span id="session-timer">00:00:00</span></div>
+        <div class="debug-item"><strong>Date/Time</strong><span id="current-datetime">--</span></div>
+        <div class="debug-item"><strong>Auto logout</strong><span id="idle-timer">30</span>s</div>
+    </div>
+    <script src="dashboard.js"></script>
 </body>
 </html>

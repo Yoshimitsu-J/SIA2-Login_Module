@@ -1,0 +1,138 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(180deg, #ffffff 0%, #f1f3f6 100%);
+    color: #222;
+}
+
+.dashboard-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.dashboard-card {
+    width: min(100%, 520px);
+    background: #fff;
+    border-radius: 1.5rem;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.12);
+    padding: 2.5rem 2rem;
+    text-align: center;
+}
+
+.profile-photo {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid #c8102e;
+    margin: 0 auto 1.5rem;
+}
+
+.profile-name {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.profile-role {
+    margin: 0.5rem 0 1.25rem;
+    color: #6c757d;
+    font-size: 1rem;
+}
+
+.profile-info {
+    display: grid;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.9rem 1rem;
+    background: #f8f9fa;
+    border-radius: 0.9rem;
+    font-size: 0.98rem;
+}
+
+.info-row span:first-child {
+    color: #6c757d;
+}
+
+.logout-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.95rem 1.25rem;
+    border: none;
+    border-radius: 0.9rem;
+    background: #c8102e;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.logout-button:hover {
+    background: #a20a25;
+}
+
+@media (max-width: 560px) {
+    .dashboard-card {
+        padding: 1.75rem 1.25rem;
+    }
+    .profile-photo {
+        width: 120px;
+        height: 120px;
+    }
+    .info-row {
+        flex-direction: column;
+        text-align: left;
+    }
+}
+
+.debug-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    background: rgba(24, 24, 24, 0.95);
+    color: #fff;
+    font-size: 0.95rem;
+    z-index: 1000;
+}
+
+.debug-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.8rem;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.debug-item strong {
+    color: #f8f9fa;
+}
+
+.debug-item span {
+    color: #d1d5db;
+}
+
+@media (max-width: 560px) {
+    .debug-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
