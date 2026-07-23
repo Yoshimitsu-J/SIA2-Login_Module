@@ -124,6 +124,30 @@ document.addEventListener('DOMContentLoaded', () => {
     openModal(passwordModal);
   });
 
+  function validatePassword(password, email) {
+    const hasUpper = /[A-Z]/.test(password);
+    const hasLower = /[a-z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSpecial = /[^A-Za-z0-9]/.test(password);
+    const hasMinimumLength = password.length >= 8;
+    const emailPrefix = email ? email.split('@')[0].toLowerCase() : '';
+    const containsEmailPrefix = emailPrefix && password.toLowerCase().includes(emailPrefix);
+    const messages = [];
+
+    if (!hasMinimumLength) messages.push('At least 8 characters long.');
+    if (!hasUpper) messages.push('Include at least one uppercase letter.');
+    if (!hasLower) messages.push('Include at least one lowercase letter.');
+    if (!hasNumber) messages.push('Include at least one number.');
+    if (!hasSpecial) messages.push('Include at least one special character.');
+    if (containsEmailPrefix) messages.push('Do not include your email username.');
+    if (password === account.password) messages.push('New password must differ from the current password.');
+
+    return {
+      valid: messages.length === 0,
+      messages,
+    };
+  }
+
   changePasswordBtn.addEventListener('click', () => {
     const newPassword = newPasswordInput.value.trim();
     const confirmPassword = confirmPasswordInput.value.trim();
@@ -136,8 +160,10 @@ document.addEventListener('DOMContentLoaded', () => {
       passwordError.textContent = 'Passwords do not match.';
       return;
     }
-    if (newPassword.length < 8) {
-      passwordError.textContent = 'Password must be at least 8 characters.';
+
+    const validation = validatePassword(newPassword, account.email);
+    if (!validation.valid) {
+      passwordError.innerHTML = validation.messages.map((msg) => `• ${msg}`).join('<br>');
       return;
     }
 
