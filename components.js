@@ -54,9 +54,82 @@ function initLoginModal() {
   const form = document.getElementById('login-form');
   const email = document.getElementById('login-email');
   const password = document.getElementById('login-password');
+  const submitButton = form ? form.querySelector('button[type="submit"]') : null;
   const error = document.getElementById('login-error');
+  const ACCOUNT_STORAGE_KEY = 'grc_account';
+  const DEFAULT_ACCOUNT = { email: 'jayiscotton@gmail.com', password: 'HelloWorld@123' };
+  let failedAttempts = 0;
+  let lockoutTimer = null;
+  let lockoutInterval = null;
 
-  const account = { email: 'jayiscotton@gmail.com', password: 'HelloWorld@123' };
+  function setLoginDisabled(disabled) {
+    if (email) email.disabled = disabled;
+    if (password) password.disabled = disabled;
+    if (submitButton) submitButton.disabled = disabled;
+  }
+
+  function startLockout() {
+    setLoginDisabled(true);
+    let remaining = 10;
+    if (error) error.textContent = `Too many failed attempts. Please wait ${remaining} seconds.`;
+
+    lockoutInterval = window.setInterval(() => {
+      remaining -= 1;
+      if (remaining > 0) {
+        if (error) error.textContent = `Too many failed attempts. Please wait ${remaining} seconds.`;
+      } else {
+        clearLockout();
+      }
+    }, 1000);
+
+    lockoutTimer = window.setTimeout(() => {
+      clearLockout();
+    }, 10000);
+  }
+
+  function clearLockout() {
+    if (lockoutTimer) {
+      window.clearTimeout(lockoutTimer);
+      lockoutTimer = null;
+    }
+    if (lockoutInterval) {
+      window.clearInterval(lockoutInterval);
+      lockoutInterval = null;
+    }
+    failedAttempts = 0;
+    setLoginDisabled(false);
+    if (error) error.textContent = '';
+  }
+
+  function getStoredAccount() {
+    const raw = localStorage.getItem(ACCOUNT_STORAGE_KEY);
+    if (!raw) {
+      saveStoredAccount(DEFAULT_ACCOUNT);
+      return { ...DEFAULT_ACCOUNT };
+    }
+    try {
+      const stored = JSON.parse(raw);
+      if (!stored || typeof stored !== 'object') {
+        saveStoredAccount(DEFAULT_ACCOUNT);
+        return { ...DEFAULT_ACCOUNT };
+      }
+      const merged = { ...DEFAULT_ACCOUNT, ...stored };
+      if (!merged.email || !merged.password) {
+        saveStoredAccount(DEFAULT_ACCOUNT);
+        return { ...DEFAULT_ACCOUNT };
+      }
+      return merged;
+    } catch (err) {
+      saveStoredAccount(DEFAULT_ACCOUNT);
+      return { ...DEFAULT_ACCOUNT };
+    }
+  }
+
+  function saveStoredAccount(account) {
+    localStorage.setItem(ACCOUNT_STORAGE_KEY, JSON.stringify(account));
+  }
+
+  const account = getStoredAccount();
 
   openButtons.forEach((btn) => {
     btn.addEventListener('click', (e) => {
@@ -80,13 +153,25 @@ function initLoginModal() {
   if (form) {
     form.addEventListener('submit', (ev) => {
       ev.preventDefault();
+      if (email && email.disabled) return;
+      if (password && password.disabled) return;
+
       const vEmail = email ? email.value.trim() : '';
       const vPass = password ? password.value : '';
       if (vEmail === account.email && vPass === account.password) {
-        // Successful hardcoded login — navigate to dashboard
+        if (lockoutTimer) {
+          window.clearTimeout(lockoutTimer);
+          lockoutTimer = null;
+        }
+        // Successful login — navigate to dashboard
         window.location.href = 'dashboard.html';
       } else {
-        if (error) error.textContent = 'Invalid student name or password.';
+        failedAttempts += 1;
+        if (failedAttempts >= 5) {
+          startLockout();
+        } else {
+          if (error) error.textContent = 'Invalid student name or password.';
+        }
       }
     });
   }

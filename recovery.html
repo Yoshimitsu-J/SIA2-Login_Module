@@ -3,10 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/recovery.css">
     <title>GRCme | Recovery</title>
 </head>
 <body>
-    <h1>Password Recovery</h1>
-    <a href="index.html" class="btn btn-primary">Go to Log-in</a>
+    <main class="recovery-page">
+        <section class="recovery-card card-left">
+            <img src="assets/grc_recovery_icon.png" alt="GRC Recovery Icon" class="recovery-icon">
+            <h1>Recover your account</h1>
+            <p>Enter your registered email in the right panel to receive an OTP and reset your password.</p>
+        </section>
+        <section class="recovery-card card-right">
+            <form id="recovery-form" class="recovery-form">
+                <label for="input-recovery-email">Enter your email to recover</label>
+                <input id="input-recovery-email" type="email" placeholder="Enter your registered email" value="">
+                <div id="email-error" class="form-error"></div>
+                <p class="note">We will send you an OTP verification code.</p>
+                <button id="get-otp" type="button" class="btn btn-primary">Get OTP</button>
+            </form>
+        </section>
+    </main>
+
+    <div id="otp-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-card">
+            <button class="modal-close" aria-label="Close OTP dialog">×</button>
+            <h2>Enter OTP</h2>
+            <p id="otp-message">Enter the 6-digit OTP sent to your email.</p>
+            <input id="otp-input" type="text" inputmode="numeric" maxlength="6" pattern="\d{6}" placeholder="Enter OTP" autocomplete="one-time-code">
+            <button id="verify-otp" class="btn btn-primary">Verify OTP</button>
+            <div id="otp-error" class="form-error"></div>
+        </div>
+    </div>
+
+    <div id="password-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-card">
+            <button class="modal-close" aria-label="Close password dialog">×</button>
+            <h2>Create New Password</h2>
+            <label for="new-password">New password</label>
+            <input id="new-password" type="password" placeholder="Create new password">
+            <label for="confirm-password">Confirm password</label>
+            <input id="confirm-password" type="password" placeholder="Confirm new password">
+            <button id="change-password" class="btn btn-primary">Change Password</button>
+            <div id="password-error" class="form-error"></div>
+        </div>
+    </div>
+
+    <div id="success-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-card">
+            <h2>Password Updated</h2>
+            <p>Your password has been updated successfully.</p>
+            <a href="index.html" class="btn btn-primary">Home</a>
+        </div>
+    </div>
+
+    <script src="recovery.js"></script>
 </body>
 </html>
