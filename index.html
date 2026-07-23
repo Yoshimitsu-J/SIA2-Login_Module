@@ -31,7 +31,28 @@ and highly competent professionals through values-based quality education.</p>
         </article>
     </section>
     </center>
-  <!-- Include the loading script -->
+    <!-- Login modal (hidden by default) -->
+    <div id="login-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-card">
+            <button class="modal-close" aria-label="Close login dialog">×</button>
+            <h2>LOG-IN</h2>
+            <form id="login-form">
+                <label for="login-email">Registered Email:</label>
+                <input id="login-email" type="email" placeholder="e.g juandelacruz@gmail.com" required>
+
+                <label for="login-password">Password:</label>
+                <input id="login-password" type="password" placeholder="Registered Password" required>
+
+                <div class="login-actions">
+                    <button type="submit" class="btn btn-primary">Log-in</button>
+                    <a href="recovery.html" class="forgot-link">Forgot password?</a>
+                </div>
+                <div id="login-error" class="login-error" role="alert" aria-live="assertive"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Include the loading script -->
     <script src="components.js"></script>
 </body>
 </html>
