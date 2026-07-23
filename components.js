@@ -44,6 +44,17 @@ function initNavbarInteraction() {
     button.addEventListener('click', toggleDropdown);
     button.addEventListener('touchstart', toggleDropdown, { passive: false });
   });
+
+  // Prevent taps on dropdown links from bubbling and accidentally closing the dropdown on mobile
+  const dropdownLinks = document.querySelectorAll('.dropdown-menu a');
+  dropdownLinks.forEach((link) => {
+    link.addEventListener('click', (ev) => {
+      ev.stopPropagation();
+    });
+    link.addEventListener('touchstart', (ev) => {
+      ev.stopPropagation();
+    }, { passive: true });
+  });
 }
 
 function initLoginModal() {
@@ -157,12 +168,16 @@ function initLoginModal() {
   }
 
   openButtons.forEach((btn) => {
-    btn.addEventListener('click', (e) => {
+    const openHandler = (e) => {
       e.preventDefault();
+      e.stopPropagation();
       modal.classList.add('open');
       modal.setAttribute('aria-hidden', 'false');
       if (email) email.focus();
-    });
+    };
+
+    btn.addEventListener('click', openHandler);
+    btn.addEventListener('touchstart', openHandler, { passive: false });
   });
 
   function closeModal() {
