@@ -1,10 +1,41 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="dashboard.html">System SIA2</a>
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item"><a class="nav-link" href="dashboard.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="recovery.html">Reset Password</a></li>
+<nav class="grc-navbar">
+  <div class="grc-navbar-inner container">
+    <a class="grc-navbar-brand" href="dashboard.html">
+      <img src="assets/Global_Reciprocal_Colleges.png" alt="GRC Logo" class="grc-navbar-logo">
+      <span>Unofficial: Educational Purposes Only</span>
+    </a>
+
+    <button class="grc-navbar-burger" type="button" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <div class="grc-navbar-menu" id="navbar-menu">
+      <ul class="grc-navbar-nav">
+        <li><a href="dashboard.html">Home</a></li>
+        <li><a href="#events">Events</a></li>
+        <li class="has-dropdown">
+          <button type="button" class="dropdown-toggle" aria-expanded="false">Academics <span class="dropdown-arrow"></span></button>
+          <ul class="dropdown-menu">
+            <li><a href="#programs" class="unavailable" aria-disabled="true">Programs</a></li>
+            <li><a href="#faculty" class="unavailable" aria-disabled="true">Faculty</a></li>
+            <li><a href="#schedule" class="unavailable" aria-disabled="true">Schedule</a></li>
+          </ul>
+        </li>
+        <li class="has-dropdown">
+          <button type="button" class="dropdown-toggle" aria-expanded="false">Student Services <span class="dropdown-arrow"></span></button>
+          <ul class="dropdown-menu">
+            <li><a href="#admission" class="unavailable" aria-disabled="true">Admission</a></li>
+            <li><a href="#library" class="unavailable" aria-disabled="true">Library</a></li>
+            <li><a href="#scholarship" class="unavailable" aria-disabled="true">Scholarship</a></li>
+            <li><a href="#student-affairs" class="unavailable" aria-disabled="true">Office of the Student Affairs</a></li>
+            <li><a href="#entrance-exam">Apply for Entrance Exam</a></li>
+          </ul>
+        </li>
+        <li><a href="#alumni-services">Alumni Services</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+        <li><a href="#about">About Us</a></li>
       </ul>
     </div>
   </div>
