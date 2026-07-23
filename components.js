@@ -104,25 +104,22 @@ function initLoginModal() {
   function getStoredAccount() {
     const raw = localStorage.getItem(ACCOUNT_STORAGE_KEY);
     if (!raw) {
-      saveStoredAccount(DEFAULT_ACCOUNT);
+      // Don't overwrite the user's storage automatically on page load.
+      // Return defaults for runtime, but only write when the user explicitly resets or recovery saves.
       return { ...DEFAULT_ACCOUNT };
     }
     try {
-      console.log('getStoredAccount - raw:', raw);
       const stored = JSON.parse(raw);
       if (!stored || typeof stored !== 'object') {
-        saveStoredAccount(DEFAULT_ACCOUNT);
         return { ...DEFAULT_ACCOUNT };
       }
       const merged = { ...DEFAULT_ACCOUNT, ...stored };
       if (!merged.email || !merged.password) {
-        saveStoredAccount(DEFAULT_ACCOUNT);
         return { ...DEFAULT_ACCOUNT };
       }
       return merged;
     } catch (err) {
-      console.warn('getStoredAccount - parse error, resetting to default', err);
-      saveStoredAccount(DEFAULT_ACCOUNT);
+      console.warn('getStoredAccount - parse error, using default', err);
       return { ...DEFAULT_ACCOUNT };
     }
   }

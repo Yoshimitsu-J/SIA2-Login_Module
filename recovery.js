@@ -8,12 +8,16 @@ function getRandomOtp() {
 
 function getStoredAccount() {
   const raw = localStorage.getItem(ACCOUNT_STORAGE_KEY);
-  if (!raw) return { ...DEFAULT_ACCOUNT };
+  if (!raw) {
+    // Do not initialize storage here; return runtime defaults.
+    return { ...DEFAULT_ACCOUNT };
+  }
   try {
     const parsed = JSON.parse(raw);
     console.log('recovery.getStoredAccount - raw:', raw);
     return { ...DEFAULT_ACCOUNT, ...parsed };
   } catch (err) {
+    console.warn('recovery.getStoredAccount - parse error, using default', err);
     return { ...DEFAULT_ACCOUNT };
   }
 }
