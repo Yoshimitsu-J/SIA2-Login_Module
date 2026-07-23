@@ -138,8 +138,26 @@ function initLoginModal() {
     }
   }
 
-  const account = getStoredAccount();
+  let account = getStoredAccount();
   // do not display stored account information in the UI
+
+  // Reset-to-default button handler (helps when stored account gets changed)
+  const resetBtn = document.getElementById('reset-default');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      saveStoredAccount(DEFAULT_ACCOUNT);
+      account = getStoredAccount();
+      failedAttempts = 0;
+      clearLockout();
+      if (error) {
+        error.style.color = '#155724';
+        error.textContent = 'Default account restored. You may now log in.';
+        window.setTimeout(() => { if (error) error.textContent = ''; }, 3000);
+      }
+      console.log('Reset to default account performed');
+    });
+  }
 
   openButtons.forEach((btn) => {
     btn.addEventListener('click', (e) => {
